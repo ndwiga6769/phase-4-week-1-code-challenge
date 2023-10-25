@@ -15,7 +15,6 @@ class HeroPower(db.Model,SerializerMixin):
     power_id = db.Column(db.Integer, db.ForeignKey('powers.id'))
     created_at = db.Column(db.DateTime,default = datetime.utcnow())
     updated_at = db.Column(db.DateTime,default = datetime.utcnow(),onupdate=datetime.utcnow())
-
     @validates('strength')
     def validates_strength(self,key,strength):
         strengths = ['Strong','Weak','Average']
@@ -26,30 +25,22 @@ class HeroPower(db.Model,SerializerMixin):
 
 class Hero(db.Model,SerializerMixin):
     __tablename__ = 'heros'
-
     serialize_rules = ('-powers.hero',)
-    
     id = db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String())
     super_name= db.Column(db.String())
     created_at = db.Column(db.DateTime(),default = datetime.utcnow())
     updated_at = db.Column(db.DateTime(),default=datetime.utcnow(),onupdate=datetime.utcnow())
-    
     powers = db.relationship("HeroPower",backref= "hero")
-
- 
 class Power(db.Model,SerializerMixin):
     __tablename__ = 'powers'
-
     serialize_rules = ('-heroes.power')
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     description = db.Column(db.String())
     created_at = db.Column(db.DateTime(),default = datetime.utcnow())
     updated_at = db.Column(db.DateTime(),default=datetime.utcnow(),onupdate=datetime.utcnow())
-    #relationship
     heroes = db.relationship("HeroPower",backref= "power")
-
     @validates('description')
     def validates_description(self,key,description):
         if len(description) < 20:

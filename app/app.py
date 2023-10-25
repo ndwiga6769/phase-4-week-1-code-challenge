@@ -3,7 +3,6 @@
 from flask import Flask, make_response,jsonify,request
 from flask_migrate import Migrate
 from flask_restful import Api,Resource
-
 from models import db, Hero,Power,HeroPower
 
 app = Flask(__name__)
@@ -41,7 +40,6 @@ class Heroes(Resource):
         )
         return response
 api.add_resource(Heroes,'/heroes')
-
 class HeroesById(Resource):
     def get(self, id):
         hero = Hero.query.filter_by(id=id).first()

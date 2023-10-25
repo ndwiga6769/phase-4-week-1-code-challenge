@@ -1,7 +1,6 @@
 from app import app
 from models import db,Hero, Power, HeroPower
 from random import randint,choice
-
 from sqlalchemy import func
 
 
@@ -9,18 +8,14 @@ with app.app_context():
     Hero.query.delete()
     Power.query.delete()
     HeroPower.query.delete()
-    
     powers = [
         Power(name="super strength", description="gives the wielder super-human strengths"),
         Power(name="flight", description="gives the wielder the ability to fly through the skies at supersonic speed"),
         Power(name="super human senses", description="allows the wielder to use her senses at a super-human level"),
         Power(name="elasticity", description="can stretch the human body to extreme lengths")
     ]
-
     db.session.add_all(powers)
     db.session.commit()
-
-
     heroes = [
         Hero(name= "Kamala Khan", super_name= "Ms. Marvel"),
         Hero(name="Doreen Green", super_name="Squirrel Girl"),
@@ -33,13 +28,9 @@ with app.app_context():
         Hero(name="Kitty Pryde", super_name="Shadowcat"),
         Hero(name="Elektra Natchios", super_name="Elektra")
     ]
-
     db.session.add_all(heroes)
     db.session.commit()
-
     powers = Power.query.all()
-
-
     strengths = ["Strong", "Weak", "Average"]
     for hero in Hero.query.all():
         for i in range(randint(1, 9)):
